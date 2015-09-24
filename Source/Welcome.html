@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="" data-ng-app="Welcomeapp">
+<head>
+    <meta t="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js" type="application/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+    <link rel="stylesheet" href="css/Welcomestyle.css">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+
+
+    <script type="text/javascript">
+
+
+     google.load("visualization", "1", {packages: ["corechart"]});
+     google.setOnLoadCallback(drawChart);
+
+ function drawChart() {
+
+     var data = google.visualization.arrayToDataTable([
+         ['Task', 'Hours per Day'],
+         ['Work', 11],
+         ['Eat', 2],
+         ['Commute', 2],
+         ['Watch TV', 2],
+         ['Sleep', 7]
+     ]);
+
+     var options = {
+         title: 'My Daily Activities',
+         is3D:true,
+     };
+
+     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+     chart.draw(data, options);
+ }
+
+     function drawdiag(){
+
+         google.load("visualization", "1", {packages: ["corechart"]});
+         google.setOnLoadCallback(drawChart);
+
+         var w=document.getElementById("work").value;
+        // alert(w);
+         var e=document.getElementById("eat").value;
+         var c=document.getElementById("commute").value;
+         var t=document.getElementById("tv").value;
+         var s=document.getElementById("sleep").value;
+         var i=parseInt(w);
+         var j=parseInt(e);
+         var k=parseInt(c);
+         var l=parseInt(t);
+         var m=parseInt(s);
+         var data = google.visualization.arrayToDataTable([
+             ['Task', 'Hours per Day'],
+             ['Work', i],
+             ['Eat',j ],
+             ['Commute',k ],
+             ['Watch TV', l],
+             ['Sleep', m]
+         ]);
+         var options = {
+             title: 'My Daily Activities'
+
+         };
+
+         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+         chart.draw(data, options);
+     }
+
+     function myFacebookLogin() {
+         FB.login(function(){
+             // Note: The call will only work if you accept the permission request
+             //alert("hello");
+             FB.api('/me/feed', 'post', {message: 'http://localhost:63342/Lab3Assign/Welcome.html'});
+             //alert("hello3");
+         }, {scope: 'publish_actions'});
+     }
+    </script>
+<style>
+    html {
+        background: url(bgimages/image3.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+</style>
+</head>
+
+<body data-ng-controller="headpart">
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '713215242112379',
+            xfbml      : true,
+            version    : 'v2.4'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+    <h1 id="welcome"></center></h1>
+
+    <div id="chart_div" style="width: 400px; height: 120px;">
+
+    </div>
+
+        <div class="form-style-5">
+            <form>
+                <fieldset>
+                    <legend> My Daily Activities</legend>
+                    <input type="number" name="field1" id="work" placeholder="How many hours do you work in a day?">
+                    <input type="number" name="field2" id="eat" placeholder="How much time you spend to eat?">
+                    <input type="number" name="field3" id="commute" placeholder="How much time you spend to commute?">
+                    <input type="number" name="field4" id="tv" placeholder="How much time you spend to Watch Tv?">
+                    <input type="number" name="field5" id="sleep" placeholder="How much time do you sleep?">
+
+                </fieldset>
+
+                <input type="submit" value="Submit" onclick="drawdiag()"/>
+            </form>
+        </div>
+
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+    <button class="directbutton" onclick="myFacebookLogin()">Share Data with Facebook</button>
+
+
+</body>
+</html>
+
+
+<script>
+    var app=angular.module('Welcomeapp', []);
+    app.controller('headpart', function ($scope) {
+
+        var username= localStorage.getItem("uname");
+        document.getElementById('welcome').innerHTML="Welcome "+username;
+
+
+
+
+
+
+    });
+
+</script>
